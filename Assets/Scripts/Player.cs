@@ -27,25 +27,32 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(move == Vector2.zero)return;
+        raycastController.UpdateRaycastOrigins();
         Vector2 translateAmount = Vector2.zero;
         //Horizontal Movement
         float distanceHorizonal = Mathf.Abs(move.x) * moveSpeed;
         Vector2 directionHorizontal = new(Mathf.Sign(move.x),0);
         
-        RaycastControllerResult resultHorizontal = raycastController.CastRaysHorizontal(directionHorizontal, distanceHorizonal);
+        RaycastControllerResult resultHorizontal = raycastController.CastRays(directionHorizontal, distanceHorizonal);
+        
         if (resultHorizontal.hit)
         {
             translateAmount.x += Mathf.Sign(move.x) * resultHorizontal.distance;
+            raycastController.TranslateRaycastOrigins(new(Mathf.Sign(move.x) * resultHorizontal.distance,0));
         }
         else
         {
             translateAmount.x += move.x * moveSpeed;
+            raycastController.TranslateRaycastOrigins(new(move.x * moveSpeed,0));
+
         }
 
         //Vertical Movement
         float distanceVertical = Mathf.Abs(move.y) * moveSpeed;
         Vector2 directionVertical = new(0,Mathf.Sign(move.y));
-        RaycastControllerResult resultVertical = raycastController.CastRaysVertical(directionVertical, distanceVertical);
+        RaycastControllerResult resultVertical = raycastController.CastRays(directionVertical, distanceVertical);
+        
         if (resultVertical.hit)
         {
             translateAmount.y += Mathf.Sign(move.y) * resultVertical.distance;
@@ -56,7 +63,7 @@ public class Player : MonoBehaviour
         }
 
         rb.MovePosition(rb.position + translateAmount);
-
+        
     }
 
     void OnMoveInput(Vector2 input)
