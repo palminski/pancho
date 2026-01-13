@@ -1,18 +1,10 @@
 using UnityEngine;
-
+[RequireComponent(typeof(BoxCollider2D))]
 public class CastController : MonoBehaviour
 {
     [HideInInspector]public BoxCollider2D boxCollider;
     [SerializeField] private float skinWidth = 0.001f;
-    [SerializeField] private float offsetCorrectionThreshold = 0.1f;
-    public float topBottomRaySpacing;
-    public float sideRaySpacing;
     public LayerMask collidableLayers;
-    [SerializeField] private bool shouldDrawRaysForDebug = false;
-    [SerializeField] private bool shouldDrawRaysForDebug2 = false;
-
-    [SerializeField][Min(2)] private int raysAcrossSide = 5;
-    [SerializeField][Min(2)] private int raysAcrossTop = 5;
 
     void Awake()
     {
