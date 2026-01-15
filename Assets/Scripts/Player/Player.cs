@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     {
         castController = GetComponent<CastController>();
         rb = GetComponent<Rigidbody2D>();
+        equipped = Instantiate(equipped, transform);
     }
 
 

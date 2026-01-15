@@ -6,6 +6,8 @@ public class TestGun : Equipable
 {
     DebugScript ds;
 
+    int ammo =1000;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -33,9 +35,8 @@ public class TestGun : Equipable
 
     void Shoot()
     {
+        ammo--;
         print("Shoot!");
-        ds= GetComponent<DebugScript>();
-        if(ds == null) return;
-        ds.Debug();
+        print(ammo);
     }
 }
