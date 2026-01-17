@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
 {
     private CastController castController;
     public Vector2 move;
+
+    public Vector2 directionFacing;
     public float moveSpeed = 1f;
 
     public Equipable equipped;
@@ -34,6 +36,7 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         if(move == Vector2.zero)return;
+        directionFacing = move.normalized;
         
         Vector2 desiredDelta = move.magnitude * moveSpeed * move.normalized;
 

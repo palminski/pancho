@@ -4,9 +4,8 @@ using UnityEngine.InputSystem;
 
 public class TestGun : Equipable
 {
-    DebugScript ds;
-
-    int ammo =1000;
+    public Bullet bullet;
+    int ammo =100;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,8 +34,18 @@ public class TestGun : Equipable
 
     void Shoot()
     {
-        ammo--;
-        print("Shoot!");
-        print(ammo);
+        Player player = GetComponentInParent<Player>();
+        if (bullet != null && ammo > 0)
+        {
+            Bullet _bullet = Instantiate(bullet, transform.position, transform.rotation);
+            float playerDIrectionAngle = Mathf.Atan2(player.directionFacing.y, player.directionFacing.x) * Mathf.Rad2Deg;
+            _bullet.bulletAngle = playerDIrectionAngle;
+            ammo--;
+            print(ammo);
+        }
+        else
+        {
+            print("empty");
+        }
     }
 }

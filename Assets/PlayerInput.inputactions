@@ -212,6 +212,17 @@
                     "action": "UseEquippedItem",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "77d8af0e-5ed1-47e2-8dc5-63a6f2ff6035",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseEquippedItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
