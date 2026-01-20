@@ -7,22 +7,27 @@ public class Player : MonoBehaviour
     private CastController castController;
     public Vector2 move;
     public float moveSpeed = 1f;
+
+    public Equipable equipped;
     private Rigidbody2D rb;
     
     void OnEnable()
     {
         GameController.Instance.Input.OnMoveInput += OnMoveInput;
+        GameController.Instance.Input.OnUseEquippedItemInput += OnUseEquippedItemInput;
     }
 
     void OnDisable()
     {
         GameController.Instance.Input.OnMoveInput -= OnMoveInput;
+        GameController.Instance.Input.OnUseEquippedItemInput -= OnUseEquippedItemInput;
     }
 
     void Awake()
     {
         castController = GetComponent<CastController>();
         rb = GetComponent<Rigidbody2D>();
+        equipped = Instantiate(equipped, transform);
     }
 
 
@@ -89,5 +94,11 @@ public class Player : MonoBehaviour
     void OnMoveInput(Vector2 input)
     {
         move = SnapToDirections(input);
+    }
+
+    void OnUseEquippedItemInput()
+    {
+        if(!equipped) return;
+        equipped.Use();
     }
 }

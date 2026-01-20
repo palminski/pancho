@@ -2,8 +2,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class TestGun : MonoBehaviour
+public class TestGun : Equipable
 {
+    DebugScript ds;
+
+    int ammo =1000;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,8 +23,20 @@ public class TestGun : MonoBehaviour
         }
     }
 
+    void Awake()
+    {
+        
+    }
+
+    public override void Use()
+    {
+        Shoot();
+    }
+
     void Shoot()
     {
+        ammo--;
         print("Shoot!");
+        print(ammo);
     }
 }
