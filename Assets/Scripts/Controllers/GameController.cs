@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,6 +8,7 @@ public class GameController : MonoBehaviour
 {
     public static GameController Instance { get; private set; }
     [HideInInspector] public InputController Input;
+    public TMP_Text debugText;
 
     void Awake()
     {
@@ -25,7 +27,7 @@ public class GameController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        if (debugText != null) debugText.text = "-";
     }
 
     // Update is called once per frame

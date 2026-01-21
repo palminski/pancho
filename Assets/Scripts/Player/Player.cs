@@ -16,13 +16,17 @@ public class Player : MonoBehaviour
     void OnEnable()
     {
         GameController.Instance.Input.OnMoveInput += OnMoveInput;
-        GameController.Instance.Input.OnUseEquippedItemInput += OnUseEquippedItemInput;
+        GameController.Instance.Input.OnTriggerPressed += OnTriggerPressed;
+        GameController.Instance.Input.OnEquippedOnePressed += OnEquippedOnePressed;
+        GameController.Instance.Input.OnEquippedTwoPressed += OnEquippedTwoPressed;
     }
 
     void OnDisable()
     {
         GameController.Instance.Input.OnMoveInput -= OnMoveInput;
-        GameController.Instance.Input.OnUseEquippedItemInput -= OnUseEquippedItemInput;
+        GameController.Instance.Input.OnTriggerPressed -= OnTriggerPressed;
+        GameController.Instance.Input.OnEquippedOnePressed -= OnEquippedOnePressed;
+        GameController.Instance.Input.OnEquippedTwoPressed -= OnEquippedTwoPressed;
     }
 
     void Awake()
@@ -99,9 +103,21 @@ public class Player : MonoBehaviour
         move = SnapToDirections(input);
     }
 
-    void OnUseEquippedItemInput()
+    void OnTriggerPressed()
     {
         if(!equipped) return;
-        equipped.Use();
+        equipped.TriggerAction();
+    }
+
+    void OnEquippedOnePressed()
+    {
+        if(!equipped) return;
+        equipped.EquippedOneAction();
+    }
+
+    void OnEquippedTwoPressed()
+    {
+        if(!equipped) return;
+        equipped.EquippedTwoAction();
     }
 }
