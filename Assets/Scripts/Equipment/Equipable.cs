@@ -2,7 +2,9 @@ using UnityEngine;
 
 public interface IEquipable
 {
-    void Use();
+    void TriggerAction();
+    void EquippedOneAction();
+    void EquippedTwoAction();
 }
 
 public class Equipable : MonoBehaviour, IEquipable
@@ -19,8 +21,18 @@ public class Equipable : MonoBehaviour, IEquipable
         
     }
 
-    public virtual void Use()
+    public virtual void TriggerAction()
     {
-        print("here");
+        print("Trigger Action");
+    }
+
+    public virtual void EquippedOneAction()
+    {
+        print("Button Action One");
+    }
+
+    public virtual void EquippedTwoAction()
+    {
+        print("Button Action Two");
     }
 }
