@@ -99,3 +99,6 @@ InitTestScene*.unity*
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 # Unity recovery temp files
 Assets/_Recovery/
+
+# Unity local recovery files
+Assets/_Recovery/
