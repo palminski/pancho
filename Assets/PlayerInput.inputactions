@@ -16,9 +16,27 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "UseEquippedItem",
+                    "name": "Trigger",
                     "type": "Button",
                     "id": "a68d3e73-72a6-4ba9-a9e7-815677b485a2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "EquippedOne",
+                    "type": "Button",
+                    "id": "efabef89-9f5a-4356-a980-83a3f8e16d76",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "EquippedTwo",
+                    "type": "Button",
+                    "id": "90436812-63ab-427a-996d-bdfe931043b3",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -209,7 +227,62 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "UseEquippedItem",
+                    "action": "Trigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "77d8af0e-5ed1-47e2-8dc5-63a6f2ff6035",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6b823ef9-37b7-450f-808e-e6fd10793d8d",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EquippedOne",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1327caf6-662b-453d-9934-27ed6cd943de",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EquippedOne",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "77fb2183-6798-4937-af96-568de391d66c",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EquippedTwo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f657210a-efbb-4a98-adb6-e111ec0c4d32",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EquippedTwo",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
