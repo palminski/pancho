@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 
 public class TestGun : Equipable
 {
+    [Tooltip("Variance Of Spawned Bullets In Degrees")][Range(0f, 360f)] public float bulletSpread;
+    [Tooltip("Variance Of Spawned Bullets In Degrees While Aiming")][Range(0f, 360f)] public float bulletSpreadWhileAiming;
+
     public Bullet bullet;
     int ammo =100;
 
@@ -50,9 +53,9 @@ public class TestGun : Equipable
         
     }
 
-    public override void TriggerAction()
+    public override void TriggerAction(bool isAiming = false)
     {
-        Shoot();
+        Shoot(isAiming);
     }
     public override void EquippedOneAction()
     {
@@ -63,7 +66,7 @@ public class TestGun : Equipable
         RotateChamber();
     }
 
-    void Shoot()
+    void Shoot(bool isAiming)
     {
         Player player = GetComponentInParent<Player>();
         if (bullet != null && chambers[chamberIndex])
@@ -71,6 +74,7 @@ public class TestGun : Equipable
             Bullet _bullet = Instantiate(bullet, transform.position, transform.rotation);
             float playerDIrectionAngle = Mathf.Atan2(player.directionFacing.y, player.directionFacing.x) * Mathf.Rad2Deg;
             _bullet.bulletAngle = playerDIrectionAngle;
+            _bullet.bulletSpread = isAiming ? bulletSpreadWhileAiming : bulletSpread;
             chambers[chamberIndex] = false;
             RotateChamber();
         }

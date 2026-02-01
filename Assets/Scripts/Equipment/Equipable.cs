@@ -2,7 +2,7 @@ using UnityEngine;
 
 public interface IEquipable
 {
-    void TriggerAction();
+    void TriggerAction(bool isAiming);
     void EquippedOneAction();
     void EquippedTwoAction();
 }
@@ -21,7 +21,7 @@ public class Equipable : MonoBehaviour, IEquipable
         
     }
 
-    public virtual void TriggerAction()
+    public virtual void TriggerAction(bool isAiming)
     {
         print("Trigger Action");
     }

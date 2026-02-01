@@ -12,10 +12,21 @@ public class Player : MonoBehaviour
 
     public Equipable equipped;
     private Rigidbody2D rb;
+
+    private bool isAiming = false;
+    
+    [SerializeField] private float diagonalHoldTime = 0.06f;
+    [SerializeField] private float analogBypassMagnitude = 0.55f;
+
+    private float diagonalHoldTimer = 0f;
+    private Vector2 rawMove = Vector2.zero;
+    private Vector2 lastSnapped = Vector2.zero;
+    private Vector2 heldDiagonal = Vector2.zero;
     
     void OnEnable()
     {
         GameController.Instance.Input.OnMoveInput += OnMoveInput;
+        GameController.Instance.Input.OnAimInput += OnAimInput;
         GameController.Instance.Input.OnTriggerPressed += OnTriggerPressed;
         GameController.Instance.Input.OnEquippedOnePressed += OnEquippedOnePressed;
         GameController.Instance.Input.OnEquippedTwoPressed += OnEquippedTwoPressed;
@@ -23,6 +34,7 @@ public class Player : MonoBehaviour
 
     void OnDisable()
     {
+        GameController.Instance.Input.OnAimInput -= OnAimInput;
         GameController.Instance.Input.OnMoveInput -= OnMoveInput;
         GameController.Instance.Input.OnTriggerPressed -= OnTriggerPressed;
         GameController.Instance.Input.OnEquippedOnePressed -= OnEquippedOnePressed;
@@ -36,12 +48,28 @@ public class Player : MonoBehaviour
         equipped = Instantiate(equipped, transform);
     }
 
+    void Update()
+    {
+        if (diagonalHoldTimer > 0f)
+        {
+            diagonalHoldTimer -= Time.deltaTime;
+            if(diagonalHoldTimer <= 0f)
+            {
+                Vector2 snapped = SnapToDirections(rawMove);
+                move = snapped;
+                lastSnapped = snapped;
+                heldDiagonal = Vector2.zero;
+            }
+        }
+    }
+
 
     void FixedUpdate()
     {
         if(move == Vector2.zero)return;
         directionFacing = move.normalized;
         
+        if(isAiming) return;
         Vector2 desiredDelta = move.magnitude * moveSpeed * move.normalized;
 
         Vector2 resolved = ResolveWIthSliding(desiredDelta,2);
@@ -83,7 +111,7 @@ public class Player : MonoBehaviour
         return totalMoved;
     }
     
-    Vector2 SnapToDirections(Vector2 input, int directions = 16, float deadzone = 0.15f)
+    Vector2 SnapToDirections(Vector2 input, int directions = 8, float deadzone = 0.15f)
     {
         float magnitude = input.magnitude;
         if (magnitude < deadzone) return Vector2.zero;
@@ -98,15 +126,64 @@ public class Player : MonoBehaviour
         return snappedDirection * Mathf.Clamp01(magnitude);
     }
 
+    bool IsDigitalLikeInput(Vector2 moveInput)
+    {
+        bool xInt = Mathf.Abs(moveInput.x - Mathf.Round(moveInput.x)) < 0.001f;
+        bool yInt = Mathf.Abs(moveInput.y - Mathf.Round(moveInput.y)) < 0.001f;
+        return xInt && yInt;
+    }
+
+    bool IsDiagonal(Vector2 direction)
+    {
+        if (direction == Vector2.zero) return false;
+        return Mathf.Abs(direction.x) > 0.25f && Mathf.Abs(direction.y) > 0.25f;
+    }
+
+    
+    // =======================
+
     void OnMoveInput(Vector2 input)
     {
-        move = SnapToDirections(input);
+
+        rawMove = input;
+
+        if (rawMove.sqrMagnitude < 0.0001f)
+        {
+            move = Vector2.zero;
+            lastSnapped = Vector2.zero;
+            heldDiagonal = Vector2.zero;
+            diagonalHoldTimer = 0f;
+            return;
+        }
+
+        Vector2 snapped = SnapToDirections(rawMove);
+
+        bool wasDiagonal = IsDiagonal(lastSnapped);
+        bool nowNotDiagonalButMoving = snapped != Vector2.zero && !IsDiagonal(snapped);
+
+        bool digitalLike = IsDigitalLikeInput(rawMove);
+
+        bool shouldHoldDiagonal = wasDiagonal && nowNotDiagonalButMoving && digitalLike;
+        if (shouldHoldDiagonal)
+        {
+            heldDiagonal = lastSnapped;
+            diagonalHoldTimer = diagonalHoldTime;
+            move = heldDiagonal;
+            return;
+        }
+        move = snapped;
+        lastSnapped = snapped;
+    }
+
+    void OnAimInput(bool isPressed)
+    {
+        isAiming = isPressed;
     }
 
     void OnTriggerPressed()
     {
         if(!equipped) return;
-        equipped.TriggerAction();
+        equipped.TriggerAction(isAiming);
     }
 
     void OnEquippedOnePressed()
