@@ -107,7 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
   speed: 0.7
   bulletAngle: 0
-  bulletSpread: 0
+  bulletSpread: 27
   collidableLayers:
     serializedVersion: 2
     m_Bits: 8

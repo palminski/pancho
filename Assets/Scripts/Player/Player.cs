@@ -12,10 +12,13 @@ public class Player : MonoBehaviour
 
     public Equipable equipped;
     private Rigidbody2D rb;
+
+    private bool isAiming = false;
     
     void OnEnable()
     {
         GameController.Instance.Input.OnMoveInput += OnMoveInput;
+        GameController.Instance.Input.OnAimInput += OnAimInput;
         GameController.Instance.Input.OnTriggerPressed += OnTriggerPressed;
         GameController.Instance.Input.OnEquippedOnePressed += OnEquippedOnePressed;
         GameController.Instance.Input.OnEquippedTwoPressed += OnEquippedTwoPressed;
@@ -23,6 +26,7 @@ public class Player : MonoBehaviour
 
     void OnDisable()
     {
+        GameController.Instance.Input.OnAimInput -= OnAimInput;
         GameController.Instance.Input.OnMoveInput -= OnMoveInput;
         GameController.Instance.Input.OnTriggerPressed -= OnTriggerPressed;
         GameController.Instance.Input.OnEquippedOnePressed -= OnEquippedOnePressed;
@@ -42,6 +46,7 @@ public class Player : MonoBehaviour
         if(move == Vector2.zero)return;
         directionFacing = move.normalized;
         
+        if(isAiming) return;
         Vector2 desiredDelta = move.magnitude * moveSpeed * move.normalized;
 
         Vector2 resolved = ResolveWIthSliding(desiredDelta,2);
@@ -103,10 +108,15 @@ public class Player : MonoBehaviour
         move = SnapToDirections(input);
     }
 
+    void OnAimInput(bool isPressed)
+    {
+        isAiming = isPressed;
+    }
+
     void OnTriggerPressed()
     {
         if(!equipped) return;
-        equipped.TriggerAction();
+        equipped.TriggerAction(isAiming);
     }
 
     void OnEquippedOnePressed()

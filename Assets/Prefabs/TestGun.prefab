@@ -151,6 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 459b23a1e89d2940fa587865aedf41c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Revolver
+  bulletSpread: 3
+  bulletSpreadWhileAiming: 3
   bullet: {fileID: 2063956220168760539, guid: 724db7e64b1266ff696bc5cfdd5bb8bd, type: 3}
 --- !u!114 &1363971145418785805
 MonoBehaviour:
