@@ -111,7 +111,7 @@ public class Player : MonoBehaviour
         return totalMoved;
     }
     
-    Vector2 SnapToDirections(Vector2 input, int directions = 16, float deadzone = 0.15f)
+    Vector2 SnapToDirections(Vector2 input, int directions = 8, float deadzone = 0.15f)
     {
         float magnitude = input.magnitude;
         if (magnitude < deadzone) return Vector2.zero;
