@@ -59,8 +59,11 @@ TagManager:
   - name: Walkbehind
     uniqueID: 776216833
     locked: 0
-  - name: Decorationns
+  - name: Decorations
     uniqueID: 3870703955
+    locked: 0
+  - name: TestLayer
+    uniqueID: 1366102033
     locked: 0
   m_RenderingLayers:
   - Default
