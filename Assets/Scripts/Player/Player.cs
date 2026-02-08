@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
 
     private bool isAiming = false;
-    
+
     [SerializeField] private float diagonalHoldTime = 0.06f;
     [SerializeField] private float analogBypassMagnitude = 0.55f;
 
@@ -22,7 +22,9 @@ public class Player : MonoBehaviour
     private Vector2 rawMove = Vector2.zero;
     private Vector2 lastSnapped = Vector2.zero;
     private Vector2 heldDiagonal = Vector2.zero;
-    
+
+    private Animator animator;
+
     void OnEnable()
     {
         GameController.Instance.Input.OnMoveInput += OnMoveInput;
@@ -45,15 +47,19 @@ public class Player : MonoBehaviour
     {
         castController = GetComponent<CastController>();
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         equipped = Instantiate(equipped, transform);
     }
 
     void Update()
     {
+        animator.SetBool("isMoving", move != Vector2.zero);
+        if(move != Vector2.zero) animator.SetFloat("moveX", move.x);
+        if(move != Vector2.zero) animator.SetFloat("moveY", move.y);
         if (diagonalHoldTimer > 0f)
         {
             diagonalHoldTimer -= Time.deltaTime;
-            if(diagonalHoldTimer <= 0f)
+            if (diagonalHoldTimer <= 0f)
             {
                 Vector2 snapped = SnapToDirections(rawMove);
                 move = snapped;
@@ -66,14 +72,14 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(move == Vector2.zero)return;
+        if (move == Vector2.zero) return;
         directionFacing = move.normalized;
-        
-        if(isAiming) return;
+
+        if (isAiming) return;
         Vector2 desiredDelta = move.magnitude * moveSpeed * move.normalized;
 
-        Vector2 resolved = ResolveWIthSliding(desiredDelta,2);
-        
+        Vector2 resolved = ResolveWIthSliding(desiredDelta, 2);
+
         rb.MovePosition(rb.position + resolved);
     }
 
@@ -89,7 +95,7 @@ public class Player : MonoBehaviour
             Vector2 direction = remaining.normalized;
             float distance = remaining.magnitude;
 
-            CastControllerResult hit = castController.CastBox(virtualCenter,direction, distance);
+            CastControllerResult hit = castController.CastBox(virtualCenter, direction, distance);
 
             if (!hit.hit)
             {
@@ -110,16 +116,16 @@ public class Player : MonoBehaviour
 
         return totalMoved;
     }
-    
+
     Vector2 SnapToDirections(Vector2 input, int directions = 8, float deadzone = 0.15f)
     {
         float magnitude = input.magnitude;
         if (magnitude < deadzone) return Vector2.zero;
 
         float angle = Mathf.Atan2(input.y, input.x);
-        float step = (2f * Mathf.PI) /directions;
+        float step = (2f * Mathf.PI) / directions;
 
-        float snappedAngle = Mathf.Round(angle/step) * step;
+        float snappedAngle = Mathf.Round(angle / step) * step;
 
         Vector2 snappedDirection = new Vector2(Mathf.Cos(snappedAngle), Mathf.Sin(snappedAngle));
 
@@ -139,7 +145,7 @@ public class Player : MonoBehaviour
         return Mathf.Abs(direction.x) > 0.25f && Mathf.Abs(direction.y) > 0.25f;
     }
 
-    
+
     // =======================
 
     void OnMoveInput(Vector2 input)
@@ -182,19 +188,19 @@ public class Player : MonoBehaviour
 
     void OnTriggerPressed()
     {
-        if(!equipped) return;
+        if (!equipped) return;
         equipped.TriggerAction(isAiming);
     }
 
     void OnEquippedOnePressed()
     {
-        if(!equipped) return;
+        if (!equipped) return;
         equipped.EquippedOneAction();
     }
 
     void OnEquippedTwoPressed()
     {
-        if(!equipped) return;
+        if (!equipped) return;
         equipped.EquippedTwoAction();
     }
 }
