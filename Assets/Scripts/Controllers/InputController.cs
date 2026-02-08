@@ -10,6 +10,8 @@ public class InputController : MonoBehaviour
     public event Action<bool> OnAimInput;
  
     public event Action OnTriggerPressed;
+    public event Action OnRightBumperPressed;
+    public event Action OnLeftBumperPressed;
     public event Action OnEquippedOnePressed;
     public event Action OnEquippedTwoPressed;
     
@@ -29,6 +31,16 @@ public class InputController : MonoBehaviour
     public void OnTrigger(InputValue input)
     {
         OnTriggerPressed?.Invoke();            
+    }
+
+    public void OnRightBumper(InputValue input)
+    {
+        OnRightBumperPressed?.Invoke();            
+    }
+
+    public void OnLeftBumper(InputValue input)
+    {
+        OnLeftBumperPressed?.Invoke();            
     }
 
     public void OnEquippedOne(InputValue input)

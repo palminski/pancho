@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
@@ -6,10 +7,13 @@ public class Player : MonoBehaviour
 {
     private CastController castController;
     public Vector2 move;
+    [SerializeField] private List<Equipable> equipment;
+    public List<Equipable> equipmentInstances = new();
 
     public Vector2 directionFacing;
     public float moveSpeed = 1f;
 
+    private int equipmentIndex = 0;
     public Equipable equipped;
     private Rigidbody2D rb;
 
@@ -22,7 +26,6 @@ public class Player : MonoBehaviour
     private Vector2 rawMove = Vector2.zero;
     private Vector2 lastSnapped = Vector2.zero;
     private Vector2 heldDiagonal = Vector2.zero;
-
     private Animator animator;
 
     void OnEnable()
@@ -30,6 +33,8 @@ public class Player : MonoBehaviour
         GameController.Instance.Input.OnMoveInput += OnMoveInput;
         GameController.Instance.Input.OnAimInput += OnAimInput;
         GameController.Instance.Input.OnTriggerPressed += OnTriggerPressed;
+        GameController.Instance.Input.OnRightBumperPressed += OnRightBumperPressed;
+        GameController.Instance.Input.OnLeftBumperPressed += OnLeftBumperPressed;
         GameController.Instance.Input.OnEquippedOnePressed += OnEquippedOnePressed;
         GameController.Instance.Input.OnEquippedTwoPressed += OnEquippedTwoPressed;
     }
@@ -39,6 +44,8 @@ public class Player : MonoBehaviour
         GameController.Instance.Input.OnAimInput -= OnAimInput;
         GameController.Instance.Input.OnMoveInput -= OnMoveInput;
         GameController.Instance.Input.OnTriggerPressed -= OnTriggerPressed;
+        GameController.Instance.Input.OnRightBumperPressed -= OnRightBumperPressed;
+        GameController.Instance.Input.OnLeftBumperPressed -= OnLeftBumperPressed;
         GameController.Instance.Input.OnEquippedOnePressed -= OnEquippedOnePressed;
         GameController.Instance.Input.OnEquippedTwoPressed -= OnEquippedTwoPressed;
     }
@@ -48,14 +55,30 @@ public class Player : MonoBehaviour
         castController = GetComponent<CastController>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        equipped = Instantiate(equipped, transform);
+
+        foreach (Equipable equipable in equipment)
+        {
+            
+            if (equipable != null)
+            {
+                Equipable itemToInstantiate = Instantiate(equipable, transform);
+                itemToInstantiate.gameObject.SetActive(false);
+                equipmentInstances.Add(itemToInstantiate);
+            }
+            else
+            {
+                equipmentInstances.Add(null);
+            }
+        }
+        Equip(equipmentInstances[equipmentIndex]);
+
     }
 
     void Update()
     {
         animator.SetBool("isMoving", move != Vector2.zero);
-        if(move != Vector2.zero) animator.SetFloat("moveX", move.x);
-        if(move != Vector2.zero) animator.SetFloat("moveY", move.y);
+        if (move != Vector2.zero) animator.SetFloat("moveX", move.x);
+        if (move != Vector2.zero) animator.SetFloat("moveY", move.y);
         if (diagonalHoldTimer > 0f)
         {
             diagonalHoldTimer -= Time.deltaTime;
@@ -145,6 +168,24 @@ public class Player : MonoBehaviour
         return Mathf.Abs(direction.x) > 0.25f && Mathf.Abs(direction.y) > 0.25f;
     }
 
+    void Equip(Equipable itemToEquip)
+    {
+        GameController.Instance.debugText.text = "-";
+
+        if (equipped != null)
+        {
+            equipped.gameObject.SetActive(false);
+            animator.SetBool(equipped.AnimationBool, false);
+            equipped = null;
+        }
+        if (itemToEquip != null)
+        {
+            itemToEquip.gameObject.SetActive(true);
+            equipped = itemToEquip;
+            animator.SetBool(equipped.AnimationBool, true);
+        }
+    }
+
 
     // =======================
 
@@ -190,6 +231,20 @@ public class Player : MonoBehaviour
     {
         if (!equipped) return;
         equipped.TriggerAction(isAiming);
+    }
+
+    void OnRightBumperPressed()
+    {
+        if (equipmentInstances.Count == 0) return;
+        equipmentIndex = (equipmentIndex +1) % equipmentInstances.Count;
+        Equip(equipmentInstances[equipmentIndex]);
+    }
+
+    void OnLeftBumperPressed()
+    {
+        if (equipmentInstances.Count == 0) return;
+        equipmentIndex = (equipmentIndex - 1 + equipmentInstances.Count ) % equipmentInstances.Count;
+        Equip(equipmentInstances[equipmentIndex]);
     }
 
     void OnEquippedOnePressed()
