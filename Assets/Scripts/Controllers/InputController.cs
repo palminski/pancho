@@ -5,8 +5,10 @@ using System;
 public class InputController : MonoBehaviour
 {
     
-    public Vector2 Move {get; private set;}
+    
     public event Action<Vector2> OnMoveInput;
+    public event Action<bool> OnAimInput;
+ 
     public event Action OnTriggerPressed;
     public event Action OnEquippedOnePressed;
     public event Action OnEquippedTwoPressed;
@@ -15,8 +17,13 @@ public class InputController : MonoBehaviour
     public void OnMove(InputValue input)
     {
         Vector2 move = input.Get<Vector2>();
-        
         OnMoveInput?.Invoke(move);            
+    }
+
+    public void OnAim(InputValue input)
+    {
+        bool isAiming = input.isPressed;
+        OnAimInput?.Invoke(isAiming);
     }
 
     public void OnTrigger(InputValue input)
