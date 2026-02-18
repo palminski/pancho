@@ -2,12 +2,17 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// GameController is a singleton that is accessable from anywhere. 
+// It contains multiple subcontrollers that relate to game state and Unity engine systems like the input system.
+
 [DefaultExecutionOrder(-100)]
 [RequireComponent(typeof(InputController))]
 public class GameController : MonoBehaviour
 {
     public static GameController Instance { get; private set; }
     [HideInInspector] public InputController Input;
+    [HideInInspector] public PathfindingGridController PathfindingGrid;
+
     public TMP_Text debugText;
 
     void Awake()
@@ -15,7 +20,11 @@ public class GameController : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+
             Input = GetComponent<InputController>();
+            PathfindingGrid = GetComponent<PathfindingGridController>();
+            PathfindingGrid.Build();
+            
             DontDestroyOnLoad(gameObject);
         }
         else
