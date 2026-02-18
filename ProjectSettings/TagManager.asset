@@ -50,7 +50,10 @@ TagManager:
   - name: Walkinfront
     uniqueID: 2757565361
     locked: 0
-  - name: Collision
+  - name: Colliders
+    uniqueID: 1464797469
+    locked: 0
+  - name: Walls
     uniqueID: 846955039
     locked: 0
   - name: Player
