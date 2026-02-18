@@ -1,0 +1,533 @@
+fileFormatVersion: 2
+guid: 4a9b48cd8632f054d80c4010f33eef8a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7881173272346739575
+    second: player_8way_noweapons_0
+  - first:
+      213: 2562551073118706467
+    second: player_8way_noweapons_1
+  - first:
+      213: -6168328615922216072
+    second: player_8way_noweapons_2
+  - first:
+      213: -197101105855215920
+    second: player_8way_noweapons_3
+  - first:
+      213: 2332633162332888441
+    second: player_8way_noweapons_4
+  - first:
+      213: 1577432721293229337
+    second: player_8way_noweapons_5
+  - first:
+      213: -1108312470289457914
+    second: player_8way_noweapons_6
+  - first:
+      213: 4019867174198391917
+    second: player_8way_noweapons_7
+  - first:
+      213: -8286945145727170377
+    second: player_8way_noweapons_8
+  - first:
+      213: 2020311257640315522
+    second: player_8way_noweapons_9
+  - first:
+      213: 5393711542634404677
+    second: player_8way_noweapons_10
+  - first:
+      213: -1332470643037316035
+    second: player_8way_noweapons_11
+  - first:
+      213: -7394727534038505399
+    second: player_8way_noweapons_12
+  - first:
+      213: -4685601411880461746
+    second: player_8way_noweapons_13
+  - first:
+      213: 9173107704746327513
+    second: player_8way_noweapons_14
+  - first:
+      213: -5329568467450155167
+    second: player_8way_noweapons_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: player_8way_noweapons_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 1
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 773c78fb55d8f5d60800000000000000
+      internalID: 7881173272346739575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_8way_noweapons_1
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 1
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32b5900cf92009320800000000000000
+      internalID: 2562551073118706467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_8way_noweapons_2
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 1
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87354161ec1b56aa0800000000000000
+      internalID: -6168328615922216072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_8way_noweapons_3
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 1
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d6c9a8a691c34df0800000000000000
+      internalID: -197101105855215920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_8way_noweapons_4
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 1
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97dd528908d2f5020800000000000000
+      internalID: 2332633162332888441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_8way_noweapons_5
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 1
+        width: 17
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91db2c1d3ba24e510800000000000000
+      internalID: 1577432721293229337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_8way_noweapons_6
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 1
+        width: 17
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60dd24c2eab7e90f0800000000000000
+      internalID: -1108312470289457914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_8way_noweapons_7
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 1
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d64395295ef69c730800000000000000
+      internalID: 4019867174198391917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_8way_noweapons_8
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 1
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b8c8cbcb4bdefc80800000000000000
+      internalID: -8286945145727170377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_8way_noweapons_9
+      rect:
+        serializedVersion: 2
+        x: 291
+        y: 1
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28aaf5f7266990c10800000000000000
+      internalID: 2020311257640315522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_8way_noweapons_10
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 1
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54bd5a722105ada40800000000000000
+      internalID: 5393711542634404677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_8way_noweapons_11
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 1
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3cdf18820d128de0800000000000000
+      internalID: -1332470643037316035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_8way_noweapons_12
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 1
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 948a5da9c76a06990800000000000000
+      internalID: -7394727534038505399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_8way_noweapons_13
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 1
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4adbcd575669feb0800000000000000
+      internalID: -4685601411880461746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_8way_noweapons_14
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 1
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ddbdc33bdc6d4f70800000000000000
+      internalID: 9173107704746327513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_8way_noweapons_15
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 1
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16fa28357b19906b0800000000000000
+      internalID: -5329568467450155167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      player_8way_noweapons_0: 7881173272346739575
+      player_8way_noweapons_1: 2562551073118706467
+      player_8way_noweapons_10: 5393711542634404677
+      player_8way_noweapons_11: -1332470643037316035
+      player_8way_noweapons_12: -7394727534038505399
+      player_8way_noweapons_13: -4685601411880461746
+      player_8way_noweapons_14: 9173107704746327513
+      player_8way_noweapons_15: -5329568467450155167
+      player_8way_noweapons_2: -6168328615922216072
+      player_8way_noweapons_3: -197101105855215920
+      player_8way_noweapons_4: 2332633162332888441
+      player_8way_noweapons_5: 1577432721293229337
+      player_8way_noweapons_6: -1108312470289457914
+      player_8way_noweapons_7: 4019867174198391917
+      player_8way_noweapons_8: -8286945145727170377
+      player_8way_noweapons_9: 2020311257640315522
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
