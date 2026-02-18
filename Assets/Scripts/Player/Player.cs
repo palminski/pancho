@@ -70,7 +70,7 @@ public class Player : MonoBehaviour
                 equipmentInstances.Add(null);
             }
         }
-        Equip(equipmentInstances[equipmentIndex]);
+        if (equipmentInstances.Count > 0) Equip(equipmentInstances[equipmentIndex]);
 
     }
 
