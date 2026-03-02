@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 // GameController is a singleton that is accessable from anywhere. 
 // It contains multiple subcontrollers that relate to game state and Unity engine systems like the input system.
@@ -33,6 +34,16 @@ public class GameController : MonoBehaviour
         }
     }
 
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -49,5 +60,15 @@ public class GameController : MonoBehaviour
             UnityEditor.EditorApplication.isPlaying = false;
             #endif
         }
+    }
+
+    public void ResetScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        PathfindingGrid.RebindAndBuild();
     }
 }

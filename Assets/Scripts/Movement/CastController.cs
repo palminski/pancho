@@ -3,7 +3,7 @@ using UnityEngine;
 public class CastController : MonoBehaviour
 {
     [HideInInspector]public BoxCollider2D boxCollider;
-    [SerializeField] private float skinWidth = 0.001f;
+    [SerializeField] private float skinWidth = 0.01f;
     public LayerMask collidableLayers;
 
     void Awake()

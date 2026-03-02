@@ -4,7 +4,7 @@ using UnityEngine.Tilemaps;
 
 public class PathfindingGridController : MonoBehaviour
 {
-
+    [SerializeField] private bool shouldDrawDebugGrid;
     [SerializeField] private Tilemap gridReference;
     [SerializeField] private LayerMask detectableLayers;
     [Range(0.1f, 1f)][SerializeField] private float cellSizeToSample = 0.5f;
@@ -19,27 +19,27 @@ public class PathfindingGridController : MonoBehaviour
     private readonly Collider2D[] _hits = new Collider2D[16];
     private static readonly Vector3Int[] Dir4 =
     {
-      new(1,0,0),  
-      new(-1,0,0),  
-      new(0,1,0),  
-      new(0,-1,0),  
+      new(1,0,0),
+      new(-1,0,0),
+      new(0,1,0),
+      new(0,-1,0),
     };
     private static readonly Vector3Int[] Dir8 =
     {
-      new(1,0,0),  
-      new(-1,0,0),  
-      new(0,1,0),  
-      new(0,-1,0),  
-      new(1,1,0),  
-      new(-1,1,0),  
-      new(1,-1,0),  
-      new(-1,-1,0),  
+      new(1,0,0),
+      new(-1,0,0),
+      new(0,1,0),
+      new(0,-1,0),
+      new(1,1,0),
+      new(-1,1,0),
+      new(1,-1,0),
+      new(-1,-1,0),
     };
 
     //----------------------------------------------------------------------------------------------------
 
     // ---    GRAPH CONSTRUCTION
-    
+
     //----------------------------------------------------------------------------------------------------
     public void Build()
     {
@@ -60,16 +60,21 @@ public class PathfindingGridController : MonoBehaviour
         foreach (var cell in bounds.allPositionsWithin)
         {
             Vector2 center = gridReference.GetCellCenterWorld(cell);
-            int count = Physics2D.OverlapBox(center, boxSize, 0f, filter, _hits);
             int mask = 0;
-            for (int i = 0; i < count; i++)
+            
+            if (SampleHits(center, filter))
             {
-                var col = _hits[i];
-                if (col == null) continue;
-                int layer = col.gameObject.layer;
-                mask |= (1 << layer);
-                _hits[i] = null;
+                int count = Physics2D.OverlapBox(center, boxSize, 0f, filter, _hits);
+                for (int i = 0; i < count; i++)
+                {
+                    var col = _hits[i];
+                    if (col == null) continue;
+                    int layer = col.gameObject.layer;
+                    mask |= (1 << layer);
+                    _hits[i] = null;
+                }
             }
+
             nodes[cell] = new Node
             {
                 cell = cell,
@@ -77,6 +82,31 @@ public class PathfindingGridController : MonoBehaviour
             };
             // print("Position: "+nodes[cell].cell+" Mask: "+mask);
         }
+    }
+
+    private bool SampleHits(Vector2 position, ContactFilter2D filter)
+    {
+        bool blocked = (
+            SampleHit(position, filter) &&
+            SampleHit(position + Vector2.left * 0.1f, filter) &&
+            SampleHit(position + Vector2.up * 0.1f, filter) &&
+            SampleHit(position + Vector2.right * 0.1f, filter) &&
+            SampleHit(position + Vector2.down * 0.1f, filter)
+        );
+        return blocked;
+    }
+
+    private bool SampleHit(Vector2 p, ContactFilter2D filter)
+    {
+        int count = Physics2D.OverlapPoint(p, filter, _hits);
+        for (int i = 0; i < count; i++) _hits[i] = null;
+        return count > 0;
+    }
+
+    public void RebindAndBuild()
+    {
+        gridReference = FindFirstObjectByType<Tilemap>();
+        Build();
     }
 
     //----------------------------------------------------------------------------------------------------
@@ -110,14 +140,14 @@ public class PathfindingGridController : MonoBehaviour
     //---   PATHFINDING
 
     //----------------------------------------------------------------------------------------------------
-    
+
     public bool TryToFindPath(
         Vector3 startWorld,
         Vector3 goalWorld,
         LayerMask blockedLayers,
         bool canMoveDiagonal,
         bool preventCuttingCorners,
-        out List<Vector3>worldPath,
+        out List<Vector3> worldPath,
         int maxExpandedNodes = 400000
     )
     {
@@ -135,7 +165,12 @@ public class PathfindingGridController : MonoBehaviour
         if (!nodes.TryGetValue(goalCell, out var goalNode)) return false;
 
         if (!CanEnter(startNode, blockedLayers)) return false;
-        if (!CanEnter(goalNode, blockedLayers)) return false;
+        if (!CanEnter(goalNode, blockedLayers))
+        {
+            if (!TryToGetAdjacentEnterableCell(startCell, goalCell, blockedLayers, canMoveDiagonal, out var newGoalCell)) return false;
+            goalCell = newGoalCell;
+            goalNode = nodes[goalCell];
+        }
 
         if (!TryAStar(startNode, goalNode, blockedLayers, canMoveDiagonal, preventCuttingCorners, maxExpandedNodes, out var cellPath)) return false;
 
@@ -146,7 +181,37 @@ public class PathfindingGridController : MonoBehaviour
         }
         return true;
     }
-    
+
+    private bool TryToGetAdjacentEnterableCell(
+        Vector3Int startingCell,
+        Vector3Int goalCell,
+        LayerMask blockedLayers,
+        bool canMoveDiagonal,
+        out Vector3Int newGoalCell
+    )
+    {
+        newGoalCell = default;
+        var directions = canMoveDiagonal ? Dir8 : Dir4;
+        bool found = false;
+        int bestH = int.MaxValue;
+
+        for (int i = 0; i < directions.Length; i++)
+        {
+            var c = goalCell + directions[i];
+            if (!nodes.TryGetValue(c, out var n)) continue;
+            if (!CanEnter(n, blockedLayers)) continue;
+
+            int h = Heuristic(startingCell, c, canMoveDiagonal);
+            if (h < bestH)
+            {
+                bestH = h;
+                newGoalCell = c;
+                found = true;
+            }
+        }
+        return found;
+    }
+
     private bool TryAStar(
         Node start,
         Node goal,
@@ -154,7 +219,7 @@ public class PathfindingGridController : MonoBehaviour
         bool canMoveDiagonal,
         bool preventCuttingCorners,
         int maxExpandedNodes,
-        out List<Vector3Int>cellPath
+        out List<Vector3Int> cellPath
     )
     {
         cellPath = null;
@@ -211,11 +276,11 @@ public class PathfindingGridController : MonoBehaviour
             expanded++;
             if (expanded > maxExpandedNodes) return false;
 
-            foreach(var neighborCell in GetNeighbors(current, canMoveDiagonal, preventCuttingCorners, blockedLayers))
+            foreach (var neighborCell in GetNeighbors(current, canMoveDiagonal, preventCuttingCorners, blockedLayers))
             {
-                if (closedSet.Contains (neighborCell)) continue;
-                int tentativeG = gScore[current] + MoveCost(current,neighborCell);
-                if(!gScore.TryGetValue(neighborCell, out var existingG) || tentativeG < existingG)
+                if (closedSet.Contains(neighborCell)) continue;
+                int tentativeG = gScore[current] + MoveCost(current, neighborCell);
+                if (!gScore.TryGetValue(neighborCell, out var existingG) || tentativeG < existingG)
                 {
                     cameFrom[neighborCell] = current;
                     gScore[neighborCell] = tentativeG;
@@ -249,7 +314,7 @@ public class PathfindingGridController : MonoBehaviour
             if (!CanEnter(neighborNode, blockedLayers)) continue;
 
             //Prevent Corner Cut if needed
-            if (canMoveDiagonal && preventCuttingCorners && dir.x != 0 && dir.y !=0)
+            if (canMoveDiagonal && preventCuttingCorners && dir.x != 0 && dir.y != 0)
             {
                 var sideA = cell + new Vector3Int(dir.x, 0, 0);
                 var sideB = cell + new Vector3Int(0, dir.y, 0);
@@ -270,7 +335,7 @@ public class PathfindingGridController : MonoBehaviour
     {
         int dx = Mathf.Abs(from.x - to.x);
         int dy = Mathf.Abs(from.y - to.y);
-        return(dx == 1 && dy == 1) ? 14 : 10;
+        return (dx == 1 && dy == 1) ? 14 : 10;
     }
 
     private int Heuristic(Vector3Int from, Vector3Int to, bool canMoveDiagonal)
@@ -280,14 +345,14 @@ public class PathfindingGridController : MonoBehaviour
 
         if (!canMoveDiagonal) return 10 * (dx + dy);
 
-        int min = Mathf.Min(dx,dy);
-        int max = Mathf.Max(dx,dy);
+        int min = Mathf.Min(dx, dy);
+        int max = Mathf.Max(dx, dy);
         return 14 * min + 10 * (max - min);
     }
 
     private List<Vector3Int> ReconstructPath(Dictionary<Vector3Int, Vector3Int> cameFrom, Vector3Int current)
     {
-        var total = new List<Vector3Int> {current};
+        var total = new List<Vector3Int> { current };
         while (cameFrom.TryGetValue(current, out var prev))
         {
             current = prev;
@@ -295,6 +360,24 @@ public class PathfindingGridController : MonoBehaviour
         }
         total.Reverse();
         return total;
+    }
+
+    void OnDrawGizmos()
+    {
+        if (!shouldDrawDebugGrid) return;
+        if (nodes == null || nodes.Count == 0) return;
+
+        Vector3 cellSize = gridReference.cellSize;
+
+        foreach (var kvp in nodes)
+        {
+            var node = kvp.Value;
+            Vector3 worldCenter = gridReference.GetCellCenterWorld(node.cell);
+            bool isBlocked = node.presentLayerMask != 0;
+            Gizmos.color = isBlocked ? Color.red : Color.green;
+
+            Gizmos.DrawCube(worldCenter, cellSize * 0.25f);
+        }
     }
 
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(CastController))]
 public class Player : MonoBehaviour
 {
-    private CastController castController;
+    [HideInInspector]public CastController castController;
     public Vector2 move;
     [SerializeField] private List<Equipable> equipment;
     public List<Equipable> equipmentInstances = new();
@@ -184,6 +184,11 @@ public class Player : MonoBehaviour
             equipped = itemToEquip;
             animator.SetBool(equipped.AnimationBool, true);
         }
+    }
+
+    public void KillPlayer()
+    {
+        GameController.Instance.ResetScene();
     }
 
 
