@@ -46,7 +46,7 @@ public class EnemyHoming : Enemy
             return;
         }
 
-        Vector2 direction = (wp - pos);
+        Vector2 direction = wp - pos;
         Vector2 step = direction.normalized * moveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(pos + step);
     }
