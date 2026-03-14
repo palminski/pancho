@@ -103,9 +103,9 @@ public class PathfindingGridController : MonoBehaviour
         return count > 0;
     }
 
-    public void RebindAndBuild()
+    public void RebindAndBuild(Tilemap tilemap = null)
     {
-        gridReference = FindFirstObjectByType<Tilemap>();
+        gridReference = tilemap != null ? tilemap : FindFirstObjectByType<Tilemap>();
         Build();
     }
 

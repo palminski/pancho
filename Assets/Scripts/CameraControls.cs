@@ -113,8 +113,9 @@ public class CameraControls : MonoBehaviour
         transform.position = new(xTarget, yTarget, transform.position.z);
     }
 
-    private void Update()
+    public void SetTilemap(Tilemap newTilemap)
     {
+        tilemap = newTilemap;
     }
 
     public void SnapToPosition(Transform target)

@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
 // GameController is a singleton that is accessable from anywhere. 
 // It contains multiple subcontrollers that relate to game state and Unity engine systems like the input system.
@@ -70,5 +71,11 @@ public class GameController : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         PathfindingGrid.RebindAndBuild();
+    }
+
+    public void RebindPathfindingGrid(Tilemap tilemap)
+    {
+        PathfindingGrid.RebindAndBuild(tilemap);
+        
     }
 }

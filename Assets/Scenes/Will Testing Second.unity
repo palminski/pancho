@@ -196,6 +196,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 628b87e6fa4d5d6188bad230ba5dc959, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  roomSide: 0
+  targetScene: {fileID: 102900000, guid: 6f570393f1684acab81bab8a3a846a0c, type: 3}
+  targetScenePath: Assets/Scenes/Will Testing.unity
 --- !u!212 &175874001
 SpriteRenderer:
   serializedVersion: 2
