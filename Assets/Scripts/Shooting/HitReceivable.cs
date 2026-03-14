@@ -26,6 +26,5 @@ public class HitReceivable : MonoBehaviour, IHitReceivable
 
     public virtual void OnHit(HitInfo hit)
     {
-        print("HIT!!!");
     }
 }

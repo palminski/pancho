@@ -77,7 +77,6 @@ public class Bullet : MonoBehaviour
         {
 
             Destroy(gameObject);
-            print(hit.point);
         }
         else
         {

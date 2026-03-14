@@ -25,7 +25,6 @@ public class EnemyPatrol : Enemy
         {
             globalWaypoints[i] = localWaypoints[i] + transform.position;
         }
-        print(globalWaypoints.Length);
     }
 
     public override void HandleWalk()
