@@ -95,12 +95,17 @@ public class CameraControls : MonoBehaviour
         if (tilemap)
         {
             tilemap.CompressBounds();
-            Camera camera = Camera.main;
+            Camera camera = cam;
             float verticalExtent = camera.orthographicSize + boarderBuffer * 2;
             float horizontalExtent = ((camera.orthographicSize + boarderBuffer) * camera.aspect) + boarderBuffer;
 
-            Vector3 minPoint = onlyUp ? transform.position : tilemap.localBounds.min + new Vector3(horizontalExtent, verticalExtent, 0);
-            Vector3 maxPoint = tilemap.localBounds.max - new Vector3(horizontalExtent, verticalExtent, 0);
+            Bounds localBounds = tilemap.localBounds;
+
+            Vector3 worldMin = tilemap.transform.TransformPoint(localBounds.min);
+            Vector3 worldMax = tilemap.transform.TransformPoint(localBounds.max);
+
+            Vector3 minPoint = worldMin + new Vector3(horizontalExtent, verticalExtent, 0);
+            Vector3 maxPoint = worldMax - new Vector3(horizontalExtent, verticalExtent, 0);
 
             targetXVector = new(Mathf.Clamp(targetPosition.x, minPoint.x, maxPoint.x), 0, 0);
             targetYVector = new(0, Mathf.Clamp(targetPosition.y, minPoint.y, maxPoint.y), 0);

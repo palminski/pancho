@@ -1,18 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [System.Serializable]
-public struct Neighbors
-{
-    public Room left;
-    public Room right;
-    public Room above;
-    public Room below;
-}
+
 
 public class Room : MonoBehaviour
 {
-    public Neighbors neighbors;
+    public List<Room> neighbors;
     [SerializeField] private Tilemap tilemap;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -38,8 +33,30 @@ public class Room : MonoBehaviour
                 tilemap.CompressBounds();
                 GameController.Instance.RebindPathfindingGrid(tilemap);
                 cameraControls.SetTilemap(tilemap);
-            }
 
+                ActivateNeighbors();
+            }
+        }
+    }
+
+    void ActivateNeighbors()
+    {
+        Room[] allRooms = FindObjectsByType<Room>(FindObjectsInactive.Include,FindObjectsSortMode.None);
+
+        HashSet<Room> roomsToKeepActive = new HashSet<Room>
+        {
+            this
+        };
+
+        foreach(Room neighbor in neighbors)
+        {
+            if (neighbor != null) roomsToKeepActive.Add(neighbor);
+        }
+
+        foreach(Room room in allRooms)
+        {
+            bool shouldBeActive = roomsToKeepActive.Contains(room);
+            room.gameObject.SetActive(shouldBeActive);
         }
     }
 }
